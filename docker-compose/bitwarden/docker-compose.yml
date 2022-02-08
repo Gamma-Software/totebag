@@ -1,0 +1,64 @@
+version: "2"
+
+# Connect to the existing traefik network
+networks:
+  traefik_default:
+    external: true
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    volumes:
+      - /apps/vaultwarden/bw-data:/data
+      - /etc/localtime:/etc/localtime
+    environment:
+      WEBSOCKET_ENABLED: 'true' # Required to use websockets
+      SIGNUPS_ALLOWED: 'true'   # set to false to disable signups
+      TZ: 'Europe/Paris'
+      ADMIN_TOKEN: 'token'
+    ports:
+      - 3012:3012
+      - 7080:80 # Facultatif avec Traefik
+
+    # Facultatif : support de Loki
+    #logging:
+    #  driver: loki
+    #  options:
+    #    loki-url: "$URL_LOKI"
+    #    loki-external-labels: service={{.Name}}
+
+    # Facultatif : support de Traefik
+    #networks:
+    #  - traefik_default
+
+    #labels:
+    #  - "traefik.enable=true"
+    #  - "traefik.http.routers.password.entrypoints=web"
+    #  - "traefik.http.routers.password.rule=Host(`pival-passwords.duckdns.org`)"
+    #  - "traefik.http.middlewares.password-https-redirect.redirectscheme.scheme=https"
+    #  - "traefik.http.routers.password.middlewares=password-https-redirect"
+    #  - "traefik.http.routers.password-secure.entrypoints=websecure"
+    #  - "traefik.http.routers.password-secure.rule=Host(`pival-passwords.duckdns.org`)"
+    #  - "traefik.http.routers.password-secure.tls=true"
+    #  - "traefik.http.routers.password-secure.tls.certresolver=http"
+    #  - "traefik.docker.network=traefik_default"
+    
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./caddy:/usr/bin/caddy  # Your custom build of Caddy.
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy-config:/config
+      - ./caddy-data:/data
+    environment:
+      - DOMAIN=https://vaultwarden.example.com  # Your domain.
+      - EMAIL=admin@example.com                 # The email address to use for ACME registration.
+      - DUCKDNS_TOKEN=<token>                   # Your Duck DNS token.
+      - LOG_FILE=/data/access.log
