@@ -1,0 +1,18 @@
+version: "3.9"
+
+# Connect to the existing traefik network
+networks:
+  frontend:
+    external: true  
+
+services:
+  blog:
+    container_name: blog
+    image: jekyll/jekyll:3.8
+    restart: always
+    hostname: blog
+    networks:
+      - frontend
+    command: jekyll serve --watch --force_polling --verbose --trace
+    volumes:
+      - /mnt/data/workspace/gamma-software.github.io:/srv/jekyll
