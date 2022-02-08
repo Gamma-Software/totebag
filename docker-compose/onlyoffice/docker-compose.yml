@@ -1,0 +1,22 @@
+version: '3'
+
+networks:
+  frontend:
+    external: true
+
+volumes:
+  onlyoffice-data:
+  onlyoffice-db:
+
+services:
+  onlyoffice:
+    container_name: onlyoffice
+    image: onlyoffice/documentserver
+    ports:
+      - 11080:80
+      - 11443:443
+    volumes:
+      - onlyoffice-data:/var/www/onlyoffice/Data
+      - onlyoffice-db:/var/lib/postgresql
+    networks:
+      - frontend
