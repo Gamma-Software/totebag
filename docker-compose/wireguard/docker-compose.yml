@@ -1,0 +1,26 @@
+version: "2.1"
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - SERVEURURL=pival.duckdns.org #optional
+      - SERVERPORT=51820 #optional
+      - PEERS=PC, PHONE, CAPSULE #optional
+      - PEERDNS=192.168.1.34 #optional
+      - INTERNAL_SUBNET=192.168.10.0 #optional
+      - ALLOWEDIPS=192.168.1.0/24, 192.168.10.0/32
+    volumes:
+      - /opt/wireguard-server/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: always
