@@ -9,6 +9,8 @@ volumes:
 networks:
   frontend:
     external: true
+  backend:
+    external: true
 
 services:
   uptimekuma:
@@ -16,6 +18,7 @@ services:
     container_name: uptimekuma
     networks:
       - frontend
+      - backend # Connect with the homeassistant fallback controler webhook
     volumes:
       - uptimekuma-data:/app/data
     restart: unless-stopped
