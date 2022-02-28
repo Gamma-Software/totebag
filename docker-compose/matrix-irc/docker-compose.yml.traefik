@@ -1,0 +1,58 @@
+version: "3.3"
+
+services:
+    synapse:
+        image: "matrixdotorg/synapse:latest"
+        container_name: "synapse"
+        volumes:
+          - synapse-data:/data
+        restart: "always"
+        ports:
+          - 8008:8008
+        networks: ["matrix"]
+        labels:
+          - traefik.enable=true
+          - traefik.http.routers.matrix.rule=Host(`matrix.pival.lan`)
+          - traefik.http.routers.matrix.entrypoints=web, websecure
+          - traefik.http.routers.matrix.tls=true
+          - traefik.http.routers.matrix.service=matrix
+          - traefik.http.services.matrix.loadbalancer.server.port=8008
+
+    synapse-proxy:
+      image: "nginx"
+      container_name: "synapse-proxy"
+      depends_on:
+        - synapse
+      volumes:
+        - ./reverse-proxy/letsencrypt:/etc/letsencrypt
+        - ./reverse-proxy/nginx.conf:/etc/nginx/conf.d/synapse.conf
+      networks: ["matrix"]
+      restart: "always"
+      ports:
+        - "9443:9443"
+
+    synapse-admin:
+      container_name: synapse-admin
+      hostname: synapse-admin
+      depends_on:
+        - synapse
+      networks: ["matrix"]
+      image: awesometechnologies/synapse-admin:latest
+        # args:
+        #   - NODE_OPTIONS="--max_old_space_size=1024"
+      ports:
+        - "8087:80"
+      restart: unless-stopped
+
+    telegram-bridge:
+      image: "dock.mau.dev/mautrix/telegram:latest"
+      volumes:
+        - ./telegram-bridge-data:/data:z
+
+networks:
+    matrix:
+        external: true
+
+volumes:
+    synapse-data:
+      external: true
