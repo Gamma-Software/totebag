@@ -1,0 +1,41 @@
+version: "2.1"
+
+networks:
+  frontend:
+    external: true
+
+volumes:
+  onlyoffice-data:
+  onlyoffice-db:
+  onlyoffice-config:
+
+services:
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud
+    container_name: nextcloud
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - /mnt/backups/main_backup/nextcloud/config:/config
+      - /mnt/backups/main_backup/nextcloud/data:/data
+    networks:
+      - frontend
+    restart: unless-stopped
+  
+  onlyoffice:
+    container_name: onlyoffice
+    image: onlyoffice/documentserver:latest
+    restart: always
+    expose:
+      - '80'
+      - '443'
+    volumes:
+      #- ./config/default.json:/etc/onlyoffice/documentserver/default.json
+      #- ./config/local.json:/etc/onlyoffice/documentserver/local.json
+      - onlyoffice-config:/etc/onlyoffice
+      - onlyoffice-data:/var/www/onlyoffice/Data
+      - onlyoffice-db:/var/lib/postgresql
+    networks:
+      - frontend
