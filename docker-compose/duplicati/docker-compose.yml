@@ -1,6 +1,10 @@
 ---
 version: '2.1'
 
+networks:
+  frontend:
+    external: true
+
 services:
 
   duplicati:
@@ -9,11 +13,11 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Berlin
+      - TZ=Europe/Paris
     volumes:
-      - /AmberPRO/duplicati/config:/config
-      - /Backups:/backups
+      - ./config:/config
+      - /mnt/backups/second_backup:/backups
       - /:/source
-    ports:
-      - 8200:8200
+    networks:
+      - frontend
     restart: unless-stopped
