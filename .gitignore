@@ -8,3 +8,5 @@ docker-compose/traefik.disable/dynamic/home-assistant.yml.notworking
 docker-compose/traefik.disable/dynamic/kasm.yml.disabled
 docker-compose/traefik.disable/dynamic/paybill-netdata.yml
 docker-compose/traefik.disable/dynamic/traefik.yml
+docker-compose/portainer/docker-compose.yml.traefik
+docker-compose/uptimekuma/*.json
