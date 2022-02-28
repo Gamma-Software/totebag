@@ -1,0 +1,16 @@
+---
+
+http:
+  routers:
+    kasm:
+      service: kasm-service
+      rule: "Host(`kasm.pival.lan`)"
+      tls: true
+      entryPoints:
+        - websecure
+      
+  services:
+    kasm-service:
+      loadBalancer:
+        servers:
+          - url: https://127.0.0.1:8443

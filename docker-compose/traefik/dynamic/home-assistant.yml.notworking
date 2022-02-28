@@ -1,0 +1,32 @@
+---
+
+
+http:
+  middlewares:
+    secHeaders:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        sslRedirect: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+        customFrameOptionsValue: SAMEORIGIN
+    https-redirect:
+      redirectScheme:
+        scheme: websecure
+  routers:
+    homeassistant:
+      service: hass-service
+      rule: "Host(`test.pival.lan`)"
+      entryPoints:
+        - web
+        - websecure
+      tls:
+        certresolver: staging
+  services:
+    hass-service:
+      loadBalancer:
+        servers:
+          - url: http://192.168.1.38:8123
