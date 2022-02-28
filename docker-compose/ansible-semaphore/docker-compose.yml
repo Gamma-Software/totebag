@@ -1,0 +1,54 @@
+version: '2'
+
+networks:
+  frontend:
+    external: true
+  ansible-semaphore-backend:
+
+volumes:
+  mysql-data:
+  semaphore-data:
+  semaphore-config:
+
+services:
+  mysql:
+    expose:
+      - 3306
+    image: mysql:5.6
+    container_name: mysql
+    hostname: mysql
+    networks:
+      - ansible-semaphore-backend
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: semaphore
+      MYSQL_USER: semaphore
+      MYSQL_PASSWORD: semaphore
+
+  semaphore:
+    image: ansiblesemaphore/semaphore:latest
+    container_name: semaphore
+    expose:
+      - 3000
+    volumes:
+      - semaphore-config:/etc/semaphore
+      - semaphore-data:/tmp/semaphore
+    environment:
+      SEMAPHORE_DB_USER: semaphore
+      SEMAPHORE_DB_PASS: semaphore
+      SEMAPHORE_DB_HOST: mysql
+      SEMAPHORE_DB_PORT: 3306
+      SEMAPHORE_DB: semaphore
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: admin
+      SEMAPHORE_ADMIN_NAME: admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+    depends_on:
+      - mysql
+    networks:
+      - frontend
+      - ansible-semaphore-backend

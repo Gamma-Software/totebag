@@ -1,0 +1,19 @@
+version: '3'
+
+networks:
+  backend:
+    external: true
+
+services:
+  webdav:
+    build: ./webdav_docker/latest
+    container_name: webdav_photos
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "14080:80"
+    env_file:
+      - .env
+    volumes:
+      - /mnt/backups/main_backup/photo_sync:/var/lib/dav/data

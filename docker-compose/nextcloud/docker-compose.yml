@@ -1,0 +1,44 @@
+version: '3'
+
+volumes:
+  db:
+
+networks:
+  nextcloud-backend:
+  frontend:
+    external: true
+
+services:
+  nextcloud-app:
+    image: nextcloud
+    container_name: nextcloud-app
+    hostname: nextcloud-app
+    restart: always
+    volumes:
+      - /opt/nextcloud:/var/www/html
+      - /mnt/backups/main_backup/nextcloud:/shared/main_backup
+      - /mnt/backups/second_backup/nextcloud:/shared/second_backup
+      #- ./virtualhost.conf:/etc/apache2/sites-enabled/virtualhost.conf
+    environment:
+      - MYSQL_PASSWORD=margera
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=nextcloud-db
+    networks:
+      - nextcloud-backend
+      - frontend
+
+  nextcloud-db:
+    image: mariadb
+    container_name: nextcloud-db
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb_read_only_compressed=OFF
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=margera
+      - MYSQL_PASSWORD=margera
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    networks:
+      - nextcloud-backend

@@ -1,0 +1,35 @@
+version: "3.3"
+
+networks:
+    matrix-backend:
+        external: false
+    backend:
+        external: true
+    frontend:
+        external: true
+
+volumes:
+    synapse-data:
+      external: true
+
+services:
+    synapse:
+        image: "matrixdotorg/synapse:latest"
+        container_name: "synapse"
+        volumes:
+          - synapse-data:/data
+        restart: "always"
+        networks:
+          - backend
+          - matrix-backend
+
+    synapse-admin:
+      container_name: synapse-admin
+      hostname: synapse-admin
+      depends_on:
+        - synapse
+      networks:
+        - frontend
+        - matrix-backend
+      image: awesometechnologies/synapse-admin:latest
+      restart: unless-stopped

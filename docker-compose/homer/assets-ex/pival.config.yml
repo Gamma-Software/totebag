@@ -1,0 +1,173 @@
+---
+# Homepage configuration
+# See https://fontawesome.com/icons for icons options
+
+title: "PiVal Homepage"
+subtitle: "Hello !"
+logo: false
+# icon: "fas fa-skull-crossbones" Optional icon
+
+header: false
+footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Designed by Valentin Rudloff</a></p>' # set false if you want to hide it.
+
+columns: "4" # "auto" or number (must be a factor of 12: 1, 2, 3, 4, 6, 12)
+connectivityCheck: true # whether you want to display a message when the apps are not accessible anymore (VPN disconnected for example)
+
+# Optional: Proxy / hosting option
+proxy:
+  useCredentials: true # send cookies & authorization headers when fetching service specific data. Set to `true` if you use an authentication proxy. Can be overrided on service level. 
+
+# Optional theme customization
+theme: default
+colors:
+  light:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#f5f5f5"
+    card-background: "#ffffff"
+    text: "#363636"
+    text-header: "#ffffff"
+    text-title: "#303030"
+    text-subtitle: "#424242"
+    card-shadow: rgba(0, 0, 0, 0.1)
+    link: "#3273dc"
+    link-hover: "#363636"
+  dark:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#131313"
+    card-background: "#2b2b2b"
+    text: "#eaeaea"
+    text-header: "#ffffff"
+    text-title: "#fafafa"
+    text-subtitle: "#f5f5f5"
+    card-shadow: rgba(0, 0, 0, 0.4)
+    link: "#3273dc"
+    link-hover: "#ffdd57"
+
+#message:
+#  # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
+#  # mapping: # allows to map fields from the remote format to the one expected by Homer
+#  #   title: 'id' # use value from field 'id' as title
+#  #   content: 'value' # value from field 'value' as content
+#  # refreshInterval: 10000 # Optional: time interval to refresh message
+#  #
+#  # Real example using chucknorris.io for showing Chuck Norris facts as messages:
+#  url: https://api.chucknorris.io/jokes/random
+#  mapping:
+#    title: Chuck Nor
+#    content: 'value'
+#  refreshInterval: 10000
+#  style: "is-warning"
+#  title: "Test"
+#  icon: "fa fa-exclamation-triangle"
+#  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+
+# Optional navbar
+# links: [] # Allows for navbar (dark mode, layout, and search) without any links
+links:
+  - name: "Github page"
+    icon: "fab fa-github"
+    logo: assets/logo/valentin-avatar.png
+    url: "https://github.com/Gamma-Software"
+  - name: "Boilerplates"
+    icon: "fab fa-github"
+    logo: assets/logo/valentin-avatar.png
+    url: "https://github.com/Gamma-Software/boilerplates"
+  - name: "Valentin"
+    #icon: "fab fa-github"
+    logo: assets/logo/valentin-avatar.png
+    url: "https://blog.pival.fr" 
+  #- name: "Priscillia"
+  #  #icon: "fas fa-book"
+  #  url: "#priscillia-page" 
+
+# Services
+# First level array represent a group.
+# Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+services:
+  - name: "Home"
+    icon: "fa fa-house-user"
+    items:
+      - name: "Home Assistant"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/1200px-Home_Assistant_Logo.svg.png"
+        subtitle: "Home assistant server"
+        url: "https://pival-assistant.duckdns.org:8123/"
+        target: "_blank"
+      - name: "Freebox Server"
+        logo: "https://www.free.fr/data/freebox-mini-4k/accordeon/server-mini4k.png?apphash=0.1.0"
+        subtitle: "Freebox Server"
+        url: "https://pival.freeboxos.fr:18000/login.php#Fbx.os.app.settings.ConnectionStatus"
+        target: "_blank"
+  - name: "Apps"
+    icon: "fas fa-rocket"
+    items:
+      - name: "Bitwarden"
+        logo: "https://www.isnotdown.com/assets/pics/bitwarden.png"
+        subtitle: "Password keeper"
+        url: "https://bitwarden.pival.fr/"
+        target: "_blank"
+      - name: "Matrix IRC"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Matrix_logo.svg/1280px-Matrix_logo.svg.png"
+        subtitle: "Communicate with encryption"
+        url: "https://app.element.io/?pk_vid=1644245805d13fbf#/login"
+        target: "_blank"
+      - name: "Kasm"
+        logo: "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.6435-9/95482736_107118417666920_5623929751904190464_n.png?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=eOA6A1Gln9MAX963qY_&_nc_ht=scontent-cdg2-1.xx&oh=00_AT9DyHWWis-wv_4i-VxolXu92xTHDX2YZkb-eSJwwZpkiA&oe=62265EC8"
+        subtitle: "Start a securised Linux instance"
+        url: "https://kasm.pival.fr"
+        target: "_blank"
+  - name: "Server"
+    icon: "fas fa-server"
+    items:
+      - name: "Pihole"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/0/00/Pi-hole_Logo.png"
+        subtitle: "Internal DNS resolver and Ads blocker"
+        url: "https://pihole.internal.pival.fr/admin"
+        type: "PiHole"
+        target: "_blank"
+      - name: "Guacamole"
+        logo: "https://www.tech2tech.fr/wp-content/uploads/2019/12/guac-tricolor-300x300.png"
+        subtitle: "Communicate with local hosts"
+        url: "https://guacamole.internal.pival.fr/#/"
+        target: "_blank"
+      - name: "Portainer"
+        logo: "https://cdn.worldvectorlogo.com/logos/portainer.svg"
+        subtitle: "Manage Docker containers"
+        url: "https://portainer.pival.fr"
+        target: "_blank"
+      - name: "Nginx Proxy Manager"
+        logo: "https://nginxproxymanager.com/icon.png"
+        subtitle: "Manage proxies"
+        url: "http://cergy-server.pival.lan:81/login"
+        target: "_blank"
+      - name: "Matrix Admin"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Matrix_logo.svg/1280px-Matrix_logo.svg.png"
+        subtitle: "Manage Matrix server"
+        url: "http://matrix-admin.pival.lan/#/login"
+        target: "_blank"
+      - name: "Cloudflare"
+        logo: "https://logos-marques.com/wp-content/uploads/2021/03/Cloudflare-Embleme.png"
+        subtitle: "Manage Cloudflare DNS"
+        url: "https://dash.cloudflare.com/bc1f0b851f86d9f6f6ead5e096404b43/pival.fr"
+        target: "_blank"
+  - name: "Monitoring"
+    icon: "fab fa-watchman-monitoring"
+    items:
+      - name: "Grafana"
+        logo: "https://www.studioseizh.com/blog/wp-content/uploads/2019/03/logo-grafana.png"
+        subtitle: "Monitor local network"
+        url: "https://grafana.pival.fr/"
+        target: "_blank"
+      - name: "Netdata"
+        logo: "https://www.peltier-net.fr/wp-content/uploads/2020/01/logo_netdata.png"
+        subtitle: "Monitor local hosts"
+        url: "https://netdata.internal.pival.fr/"
+        target: "_blank"
+      - name: "Uptime Kuma"
+        logo: "https://opencollective-production.s3.us-west-1.amazonaws.com/af670e80-082d-11ec-9ccd-77fe5bcff8a2.png"
+        subtitle: "Monitor servers"
+        url: "https://uptime.pival.fr/"
+        target: "_blank"

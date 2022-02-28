@@ -1,0 +1,21 @@
+---
+version: '3'
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+services:
+  wgexporter:
+    image: mindflavor/prometheus-wireguard-exporter:latest
+    container_name: wgexporter
+    network_mode: host
+    # ports:
+    #   - "8080:8080"
+    networks:
+      - backend
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped

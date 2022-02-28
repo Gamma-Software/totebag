@@ -1,0 +1,45 @@
+version: '3'
+
+volumes:
+  proxy-manager-data:
+  proxy-manager-db:
+  ssl-certs:
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    env_file:
+      - proxy_manager.env
+    environment:
+      - DB_MYSQL_HOST=db
+    volumes:
+      - proxy-manager-data:/data
+      - proxy-manager-db:/data/mysql
+      - ssl-certs:/etc/letsencrypt
+    networks:
+      - frontend
+      - backend
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    container_name: nginx-proxy-manager-db
+    restart: always
+    env_file:
+      - db.env
+    volumes:
+      - proxy-manager-db:/var/lib/mysql
+    networks:
+      - backend
