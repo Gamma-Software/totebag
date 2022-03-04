@@ -8,8 +8,8 @@ volumes:
 networks:
   frontend:
     external: true
-  backend:
-    external: true
+  guacamole-backend:
+    external: false
 
 services:
   guacamole-mysql-db:
@@ -21,7 +21,7 @@ services:
     env_file:
       - .env # stores the MYSQL_PASSWORD=****
     networks:
-      - backend
+      - guacamole-backend
 
   guacd:
     image: guacamole/guacd
@@ -33,7 +33,7 @@ services:
     expose:
       - "4822"
     networks:
-      - backend
+      - guacamole-backend
 
   guacamole:
     image: guacamole/guacamole
@@ -46,7 +46,7 @@ services:
       - "guacd-data:/data"
       - "guacd-conf:/conf:ro"
     networks:
-      - backend
+      - guacamole-backend
       - frontend
     expose:
       - "8080"
