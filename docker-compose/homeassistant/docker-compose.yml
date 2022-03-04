@@ -1,10 +1,11 @@
 version: "3"
 
 networks:
-  frontend:
-    external: true
   backend:
     external: true
+
+volumes:
+  webhook-lib:
 
 services:
 #  homeassistant:
@@ -28,4 +29,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./webhook:/var/opt/webhookd/scripts
+      - webhook-lib:/var/lib/docker
     command: "webhookd --scripts=/var/opt/webhookd/scripts"
