@@ -15,7 +15,7 @@ connectivityCheck: true # whether you want to display a message when the apps ar
 
 # Optional: Proxy / hosting option
 proxy:
-  useCredentials: true # send cookies & authorization headers when fetching service specific data. Set to `true` if you use an authentication proxy. Can be overrided on service level. 
+  useCredentials: true # send cookies & authorization headers when fetching service specific data. Set to `true` if you use an authentication proxy. Can be overrided on service level.
 
 # Optional theme customization
 theme: default
@@ -47,23 +47,23 @@ colors:
     link: "#3273dc"
     link-hover: "#ffdd57"
 
-#message:
-#  # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
-#  # mapping: # allows to map fields from the remote format to the one expected by Homer
-#  #   title: 'id' # use value from field 'id' as title
-#  #   content: 'value' # value from field 'value' as content
-#  # refreshInterval: 10000 # Optional: time interval to refresh message
-#  #
-#  # Real example using chucknorris.io for showing Chuck Norris facts as messages:
-#  url: https://api.chucknorris.io/jokes/random
-#  mapping:
-#    title: Chuck Nor
-#    content: 'value'
-#  refreshInterval: 10000
-#  style: "is-warning"
-#  title: "Test"
-#  icon: "fa fa-exclamation-triangle"
-#  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+message:
+  # url: "https://<my-api-endpoint>" # Can fetch information from an endpoint to override value below.
+  # mapping: # allows to map fields from the remote format to the one expected by Homer
+  #   title: 'id' # use value from field 'id' as title
+  #   content: 'value' # value from field 'value' as content
+  # refreshInterval: 10000 # Optional: time interval to refresh message
+  #
+  # Real example using chucknorris.io for showing Chuck Norris facts as messages:
+  url: https://hellos.internal.pival.fr/randomhellos
+  mapping:
+    title: 'hello'
+    content: 'message'
+  refreshInterval: 10000
+  style: "is-warning"
+  title: "Hello"
+  icon: "fa fa-exclamation-triangle"
+  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 
 # Optional navbar
 # links: [] # Allows for navbar (dark mode, layout, and search) without any links
@@ -81,10 +81,10 @@ links:
   - name: "Valentin"
     #icon: "fab fa-github"
     logo: assets/logo/valentin-avatar.png
-    url: "https://blog.pival.fr" 
+    url: "https://blog.pival.fr"
   #- name: "Priscillia"
   #  #icon: "fas fa-book"
-  #  url: "#priscillia-page" 
+  #  url: "#priscillia-page"
 
 # Services
 # First level array represent a group.
@@ -96,7 +96,7 @@ services:
       - name: "Home Assistant"
         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/1200px-Home_Assistant_Logo.svg.png"
         subtitle: "Home assistant server"
-        url: "https://pival-assistant.duckdns.org:8123/"
+        url: "https://homeassistant.pival.fr/"
         target: "_blank"
       - name: "Freebox Server"
         logo: "https://www.free.fr/data/freebox-mini-4k/accordeon/server-mini4k.png?apphash=0.1.0"
@@ -151,7 +151,7 @@ services:
       - name: "Guacamole"
         logo: "https://www.tech2tech.fr/wp-content/uploads/2019/12/guac-tricolor-300x300.png"
         subtitle: "Communicate with local hosts"
-        url: "https://guacamole.internal.pival.fr/#/"
+        url: "https://guacamole.internal.pival.fr/guacamole/#/"
         tag: "via vpn"
         target: "_blank"
       - name: "Portainer"
@@ -169,7 +169,7 @@ services:
       - name: "Scripts on Cergy Server"
         logo: "http://cdn.onlinewebfonts.com/svg/img_489617.png"
         subtitle: "Run scripts and schedule tasks"
-        url: "http://192.168.1.34:5000/"
+        url: "https://script.internal.pival.fr/"
         tag: "via vpn"
         target: "_blank"
       #- name: "Matrix Admin"
@@ -202,4 +202,8 @@ services:
         logo: "https://opencollective-production.s3.us-west-1.amazonaws.com/af670e80-082d-11ec-9ccd-77fe5bcff8a2.png"
         subtitle: "Monitor servers"
         url: "https://uptime.pival.fr/"
+        target: "_blank"
+      - name: "Netgear switch"
+        subtitle: "Monitor switch"
+        url: "http://192.168.1.106/"
         target: "_blank"
