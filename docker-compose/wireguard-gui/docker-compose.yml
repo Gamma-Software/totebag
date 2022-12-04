@@ -1,0 +1,37 @@
+version: "2.1"
+
+networks:
+  frontend:
+    external: true
+  vpn:
+    external: true
+
+services:
+  wireguard-gui:
+    image: weejewel/wg-easy
+    container_name: wireguard-gui
+    restart: unless-stopped
+    networks:
+      - frontend
+      - vpn
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    env_file:
+      - .env
+    environment:
+      - WG_HOST=vpn.pival.fr
+      - WG_PORT=51820
+      #- PEERS=VAL_PC, VAL_MAC, PILA_PC, VAL_PHONE, PILA_PHONE, MANUEL_PHONE, LAURENCE_PHONE, CAPSULE #optional
+      - WG_DEFAULT_DNS=192.168.1.93
+      - WG_DEFAULT_ADDRESS=10.13.13.x # IP range of the vpn external docker network
+      #- WG_ALLOWED_IPS=0.0.0.0/0
+    volumes:
+      - ./config:/etc/wireguard
+    ports:
+      - 51820:51820/udp
+      - 51821:51821/tcp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+  
