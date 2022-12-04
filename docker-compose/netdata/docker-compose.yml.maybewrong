@@ -1,11 +1,15 @@
-version: '3'
+version: "3.9"
+
+# Connect to the existing traefik network
+networks:
+  frontend:
+    external: true
+
 services:
   netdata:
     image: netdata/netdata
     container_name: netdata
     hostname: cergy-server
-    ports:
-      - 19999:19999
     restart: unless-stopped
     cap_add:
       - SYS_PTRACE
@@ -18,12 +22,13 @@ services:
       - /etc/passwd:/host/etc/passwd:ro
       - /etc/group:/host/etc/group:ro
       - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
+      - /sys:/host/sys:ro 
       - /etc/os-release:/host/etc/os-release:ro
-    environment:
-      - NETDATA_CLAIM_TOKEN=SshG_tgzM-elVok60MOEkP210n_UfFic_TDfFh0sZR-flSEdvcLR8kepw1VlIM1a6EYLCOZPl9lpkowvLz4ksrl_u_vnxWTkF247OotgJGd5sPo8OMMnTDGMKqVshvvBUTBf7I8
-      - NETDATA_CLAIM_URL=https://app.netdata.cloud
-      - NETDATA_CLAIM_ROOMS=5823aab7-ed01-4695-8949-741f58b6de14
+    #command: -u valentin
+    networks:
+      - frontend
+    env_file:
+      - .env
 
 volumes:
   netdataconfig:
