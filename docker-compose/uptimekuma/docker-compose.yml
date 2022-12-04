@@ -1,24 +1,22 @@
 
 version: '3'
 
+networks:
+  backend:
+    external: true
+
 volumes:
   uptimekuma-data:
     driver: local
-
-# Connect to the existing traefik network
-networks:
-  frontend:
-    external: true
-  backend:
-    external: true
 
 services:
   uptimekuma:
     image: louislam/uptime-kuma:latest
     container_name: uptimekuma
     networks:
-      - frontend
-      - backend # Connect with the homeassistant fallback controler webhook
+      - backend
+    ports:
+      - 3001:3001
     volumes:
       - uptimekuma-data:/app/data
     restart: unless-stopped
