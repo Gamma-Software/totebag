@@ -8,10 +8,15 @@ volumes:
   onlyoffice-data:
   onlyoffice-db:
   onlyoffice-config:
+  onlyoffice-log:
+  onlyoffice-lib:
+  onlyoffice-redis:
+  onlyoffice-font:
+  onlyoffice-rabbitmq:
 
 services:
   nextcloud:
-    image: lscr.io/linuxserver/nextcloud
+    image: lscr.io/linuxserver/nextcloud:latest
     container_name: nextcloud
     environment:
       - PUID=1000
@@ -26,7 +31,7 @@ services:
   
   onlyoffice:
     container_name: onlyoffice
-    image: onlyoffice/documentserver:latest
+    image: onlyoffice/documentserver:7.0
     restart: always
     expose:
       - '80'
@@ -37,5 +42,10 @@ services:
       - onlyoffice-config:/etc/onlyoffice
       - onlyoffice-data:/var/www/onlyoffice/Data
       - onlyoffice-db:/var/lib/postgresql
+      - onlyoffice-lib:/var/lib/onlyoffice
+      - onlyoffice-log:/var/log/onlyoffice
+      - onlyoffice-redis:/var/lib/redis
+      - onlyoffice-font:/usr/share/fonts/truetype/custom
+      - onlyoffice-rabbitmq:/var/lib/rabbitmq
     networks:
       - frontend
