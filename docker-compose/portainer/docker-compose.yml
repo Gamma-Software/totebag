@@ -1,10 +1,5 @@
 version: '3'
 
-# Connect to the existing traefik network
-networks:
-  frontend:
-    external: true  
-
 services:
   portainer:
     container_name: portainer
@@ -14,8 +9,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
-    networks:
-      - frontend
+    ports:
+      - 9001:9000
 
 volumes:
   portainer-data: 
