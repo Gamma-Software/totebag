@@ -8,8 +8,8 @@ volumes:
 networks:
   frontend:
     external: true
-  backend:
-    external: true
+  npm-backend:
+    external: false
 
 services:
   app:
@@ -32,7 +32,7 @@ services:
       - ssl-certs:/etc/letsencrypt
     networks:
       - frontend
-      - backend
+      - npm-backend
   db:
     image: 'jc21/mariadb-aria:latest'
     container_name: nginx-proxy-manager-db
@@ -42,4 +42,4 @@ services:
     volumes:
       - proxy-manager-db:/var/lib/mysql
     networks:
-      - backend
+      - npm-backend
