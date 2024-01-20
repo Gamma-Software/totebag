@@ -28,10 +28,10 @@ services:
     networks:
       - frontend
     restart: unless-stopped
-  
+
   onlyoffice:
     container_name: onlyoffice
-    image: onlyoffice/documentserver:7.0
+    image: onlyoffice/documentserver:latest
     restart: always
     expose:
       - '80'

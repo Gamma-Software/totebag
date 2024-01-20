@@ -3,7 +3,7 @@ version: "3.9"
 # Connect to the existing traefik network
 networks:
   traefik_default:
-    external: true  
+    external: true
 
 services:
   jupyter-notebooks:
