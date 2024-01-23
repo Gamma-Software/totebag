@@ -1,0 +1,13 @@
+version: '2'
+services:
+  dns:
+    restart: always
+    container_name: dnsmasq
+    image: strm/dnsmasq
+    volumes:
+      - ./config/host:/etc/host
+      - ./config/resolv.conf:/etc/resolv.conf
+    ports:
+      - "53:53/udp"
+    cap_add:
+      - NET_ADMIN

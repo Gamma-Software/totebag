@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  timemachine:
+    image: mbentley/timemachine:smb
+    env_file:
+      - .env
+    volumes:
+      - /mnt/backups/second_backup/time_machine:/opt/timemachine
+      - timemachine-var-lib-samba:/var/lib/samba
+      - timemachine-var-cache-samba:/var/cache/samba
+      - timemachine-run-samba:/run/samba
+    secrets:
+      - password
+    restart: always
+    network_mode: host
+#    ulimits:
+#      nofile:
+#        soft: 65536
+#        hard: 65536
+
+secrets:
+  password:
+    file: ./password.txt
+
+volumes:
+  timemachine-var-lib-samba:
+  timemachine-var-cache-samba:
+  timemachine-run-samba:
