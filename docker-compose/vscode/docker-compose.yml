@@ -1,0 +1,19 @@
+---
+version: "2.1"
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    env_file:
+      - .env
+    volumes:
+      - "/home/valentin/.ssh:/config/.ssh"
+      - "vscode_data:/config"
+      - "/mnt/data/workspace:/home/coder/workspace"
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+
+
+volumes:
+    vscode_data:
